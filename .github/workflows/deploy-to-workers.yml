@@ -21,7 +21,6 @@ jobs:
       - name: Install bun runtime
         run: |
           curl -fsSL https://bun.sh/install | bash
-          echo "::add-path::$HOME/.bun/bin"
 
       # Confirm bun installation
       - name: Verify bun installation
