@@ -21,8 +21,9 @@ jobs:
           curl -fsSL https://bun.sh/install | bash
           echo "$HOME/.bun/bin" >> $GITHUB_PATH
 
-      - name: Verify bun installation
-        run: bun --version
+      - name: Bun installation
+        run: bun install
+
 
       - name: Install wrangler CLI globally using bun
         run: bun add -g wrangler@4.32.0
