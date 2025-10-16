@@ -1,36 +1,29 @@
-name: Automated Deployment to Cloudflare Workers
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    name: Deploy to Cloudflare Workers
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Install bun runtime
       - name: Install bun runtime
         run: |
           curl -fsSL https://bun.sh/install | bash
+          echo "$HOME/.bun/bin" >> $GITHUB_PATH
 
-      # Install wrangler CLI globally using bun
-      - name: Install wrangler CLI with bun
+      - name: Verify bun installation
+        run: bun --version
+
+      - name: Install wrangler CLI globally using bun
         run: bun add -g wrangler@4.32.0
 
-      # Deploy to Cloudflare Workers using wrangler-action
+      - name: Verify wrangler installation
+        run: wrangler --version
+
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy apps/cf-server/src/index.ts --minify --env=""
+          command: deploy src/index.ts --minify --env=""
           wranglerVersion: "4.32.0"
