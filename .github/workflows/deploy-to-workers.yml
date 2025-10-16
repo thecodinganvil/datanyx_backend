@@ -26,10 +26,6 @@ jobs:
       - name: Install wrangler CLI with bun
         run: bun add -g wrangler@4.32.0
 
-      # Confirm wrangler installation
-      - name: Verify wrangler installation
-        run: wrangler --version
-
       # Deploy to Cloudflare Workers using wrangler-action
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
